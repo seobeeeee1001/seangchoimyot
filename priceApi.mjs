@@ -17,9 +17,9 @@ function priceApiCore() {
 
     this.getEntpInfo = async function (entpId) {
         var endpoint = 'getStoreInfoSvc.do'
-        var reqUrl = baseUrl + endpoint;
+        var reqUrl = this.baseUrl + endpoint;
         var params = "?";
-        params += 'serviceKey=' + apiKey;
+        params += 'serviceKey=' + this.apiKey;
         if (entpId != null) params += "&entpId=" + entpId;
 
         return fetch(reqUrl + params)
@@ -31,9 +31,9 @@ function priceApiCore() {
     this.getProductPriceInfo = async function (goodInspectDay, goodId, entpId) {
         var endpoint = 'getProductPriceInfoSvc.do'
 
-        var reqUrl = baseUrl + endpoint;
+        var reqUrl = this.baseUrl + endpoint;
         var params = "?";
-        params += 'serviceKey=' + apiKey;
+        params += 'serviceKey=' + this.apiKey;
         if (goodInspectDay != null) params += "&goodInspectDay=" + goodInspectDay;
         if (entpId != null) params += "&entpId=" + entpId;
         if (goodId != null) params += "&goodId=" + goodId;
