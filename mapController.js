@@ -5,7 +5,22 @@ function mapControllerCore(kakaoObject) {
     this.markers = [];
     this.infowindows = [];
     this.selected_entps = [];
+    this.selectedNames = [];
     this.ps = new this.kakao.maps.services.Places();
+
+    this.kakaoSearchKeyword = function (keyword) {
+        var apiKey = "***REMOVED***";
+        var url = "https://dapi.kakao.com/v2/local/search/keyword.json";
+        var params = "?query=" + keyword;
+
+        return fetch(url + params, {
+            method: "GET",
+            headers: {
+                'Authorization': 'KakaoAK ' + apiKey
+            }
+        })
+        .then((res) => res.json());
+    }
 
     this.drawMap = function (tagId) {
         var mapContainer = document.getElementById(tagId), // 지도를 표시할 div 
@@ -30,7 +45,7 @@ function mapControllerCore(kakaoObject) {
         this.map.setBounds(this.circle.getBounds());
     }
 
-    this.setCenterBySearchKeyword = function (keyword, radius, entps_info) {
+    this.setCenterBySearchKeyword = function (keyword, radius, entpsCode, entpsCoord) {
         this.destroyMarkers();
         var base = this;
         this.ps.keywordSearch(keyword, function(datas, status, pr) {
@@ -51,12 +66,14 @@ function mapControllerCore(kakaoObject) {
                 });
                 base.map.setBounds(base.circle.getBounds());
                 var center = base.map.getCenter();
-                for (var i = 0; i < entps_info.length; i++) {
-                    var target = new base.kakao.maps.LatLng(entps_info[i][2].Ma, entps_info[i][2].La);
-                    var code = entps_info[i][0];
-                    if (base.getDistancebyLatLng(center, target) <= radius) {
-                        base.displayMarker(target, entps_info[i][1].place_name, code);
-                    }
+                for (var i = 0; i < entpsCode.length; i++) {
+                    try {
+                        var target = new base.kakao.maps.LatLng(entpsCoord[i].Ma, entpsCoord[i].La);
+                        var code = entpsCode[i][0];
+                        if (base.getDistancebyLatLng(center, target) <= radius) {
+                            base.displayMarker(target, entpsCode[i][1], code);
+                        }
+                    } catch {}
                 }
             }
         })
@@ -70,6 +87,7 @@ function mapControllerCore(kakaoObject) {
         for (var i = 0; i < this.infowindows.length; i++) {
             this.infowindows[i].close();
         }
+        this.selectedNames = [];
         this.selected_entps = [];
         this.infowindows = [];
         this.markers = [];
@@ -86,6 +104,7 @@ function mapControllerCore(kakaoObject) {
             zIndex: 1
         });
         this.selected_entps.push(code);
+        this.selectedNames.push(title);
         infowindow.setContent('<div>' + title + '</div>');
         infowindow.open(this.map, marker);
         this.infowindows.push(infowindow);

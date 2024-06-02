@@ -3,21 +3,146 @@
     <head>
         <meta charset="utf-8">
         <base href="http://seangchoimyot.kro.kr/">
-        <title>키워드로 장소검색하기</title>
+        <title>내 주변 생필품 최저가</title>
 
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=97450fa3f9e05038d3ae4f160f644f55&libraries=services,map,circle"></script>
         <script type="text/javascript" src="mapController.js"></script>
+        <script type="text/javascript" src="priceApi.mjs"></script>
         <script type="text/javascript" src="entps.js" ></script>
+        <style>
+            div#titlebar {
+                height: 3em;
+                background-color: aliceblue;
+            };
+
+            td#menubar {
+                width: 200px;
+                vertical-align: top;
+            };
+            
+        </style>
         <script>
-            var mapController = new mapControllerCore(kakao);
+            const mapController = new mapControllerCore(kakao);
+            const priceApi = new priceApiCore();
+            var entpJson = {};
+            for (var i = 0; i < entpsCode.length; i++) {
+                entpJson[entpsCode[i][0]] = entpsCode[i][1];
+            }
+
+            var goodsBagList = {};
+            var goods = {};
+            console.log('load goods list...');
+            priceApi.getProductInfo()
+            .then((res) => {
+                console.log('complete load goods list\nparsing start...');
+                for (var i = 0; i < res.length; i++) {
+                    var good = res[i];
+                    var goodId = good.getElementsByTagName('goodId')[0].textContent;
+                    var goodName = good.getElementsByTagName('goodName')[0].textContent;
+                    goods[goodId] = goodName;
+                }
+                return goods;
+            })
+            .then((goods) => updateGoods());
+
+            function addGood(inputtag) {
+                var txt = inputtag.value;
+                inputtag.value = "";
+                var goodsList = document.getElementById('goodsList');
+                var newGoods = document.createElement('li');
+                var newCode = document.createElement('span');
+
+                var goodId = txt.split(' /')[0]
+
+                goodsBagList[goodId] = true;
+                newCode.innerText = goodId;
+                console.log(goodsBagList);
+                var newName = document.createElement('span');
+                newName.innerText = " " + goods[goodId] + '\t';
+
+                var newButton = document.createElement('input');
+                newButton.setAttribute('type',"button");
+                newButton.setAttribute('value', 'x');
+                newButton.setAttribute('onclick', 'removeMe(this)');
+                newGoods.appendChild(newCode);
+                newGoods.appendChild(newName);
+                newGoods.appendChild(newButton);
+                goodsList.appendChild(newGoods);
+            }
+
+            function removeMe(me) {
+                var parent = me.parentElement;
+                var code = Number(parent.getElementsByTagName('span')[0].textContent);
+                
+                delete goodsBagList[code];
+                console.log(goodsBagList);
+                me.parentElement.remove();
+            }
+
+            function updateGoods() {
+                var keys = Object.keys(goods);
+                var datalist = document.getElementById('goodsDataList');
+                for (var i = 0; i < keys.length; i++) {
+                    var newElement = document.createElement('option');
+                    var key = keys[i];
+                    var value = goods[key];
+                    newElement.setAttribute('value', key + " / " + value);
+                    datalist.appendChild(newElement);
+                }
+            }
+
+            async function calculateBag() {
+                var resultElement = document.getElementById('result');
+                resultElement.innerHTML = "";
+                var selectedGoodsId = Object.keys(goodsBagList);
+                var selectedEntpsId = mapController.selected_entps;
+                for (var i = 0; i < selectedEntpsId.length; i++) {
+                    var entpId = selectedEntpsId[i];
+                    var priceList = [];
+                    for (var j = 0; j < selectedGoodsId.length; j++) {
+                        var goodId = selectedGoodsId[j];
+                        var goodPrice = await priceApi.getRecentProductPrice(goodId, entpId);
+                        priceList.push([goods[goodId], goodPrice]);
+                    }
+                    var newLine = document.createElement('span');
+                    newLine.innerHTML += '[' + entpJson[entpId] + ']<br>';
+                    for (var j = 0; j < priceList.length; j++) {
+                        var newName = priceList[j][0];
+                        var newPrice = priceList[j][1];
+                        newLine.innerHTML += newName + "\t\t" + newPrice + "<br>";
+                    }
+                    newLine.innerHTML += '<br>';
+                    resultElement.appendChild(newLine);
+                }
+            }
         </script>
     </head>
 <body>
-    <div id="map" style="width:100%;height:1100px;"></div>
-    <p>초기 위치 설정</p><br>
-    <input type="text" id="firstpotision" value="부경대학교">
-    <input type="button" value='초기 위치 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entps_info)">
-    <span>반경 <input value='3000' type="number" id="radius" step="500"></span>
+    <div id="titlebar"></div>
+    <table style="width: 100%; height: 900px;">
+        <tr>
+            <td id="menubar" style="width: 300px; vertical-align: top;">
+                <div>
+                    <p>초기 위치 설정</p><br>
+                    <input type="text" id="firstpotision" value="부경대학교"><br>
+                    <span>반경 <input value='3000' type="number" id="radius" step="500"></span><br>
+                    <input type="button" value='초기 위치 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entpsCode, entpsCoord)">
+                    
+                    <br>
+                    <datalist id="goodsDataList"></datalist>
+                    <div id="goodBox"><ul id="goodsList"></ul><br>
+                        <input type="text" id="goodsId" list="goodsDataList"> <input type="button" value="상품 추가" onclick="addGood(document.getElementById('goodsId'))"></button>
+                    </div>
+                    <br>
+            
+                    <input type="button" value="장바구니 계산하기" onclick="calculateBag()">
+                    <div id="result"></div>
+                </div>
+            </td>
+            <td><div id="map" style="width: 100%; height: 100%;"></div></td>
+            
+        </tr>
+    </table>
     <script>
         mapController.drawMap('map');
     </script>

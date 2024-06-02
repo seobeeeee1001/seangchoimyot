@@ -23,8 +23,10 @@ app.get('/getProductInfoSvc.do', async (req, res) => {
     try {
         const response = await fetch(url);
         const text = await response.text();
+        console.log(text);
         res.send(text);
     } catch (error) {
+        console.log('error');
         res.status(500).send('Error fetching data');
     }
 });
@@ -41,9 +43,11 @@ app.get('/getStoreInfoSvc.do', async (req, res) => {
   try {
       const response = await fetch(url);
       const text = await response.text();
+      console.log(text);
       res.send(text);
   } catch (error) {
-      res.status(500).send('Error fetching data');
+    console.log('error');
+    res.status(500).send('Error fetching data');
   }
 });
 
@@ -65,8 +69,10 @@ app.get('/getProductPriceInfoSvc.do', async (req, res) => {
     try {
         const response = await fetch(url);
         const text = await response.text();
+        console.log(text);
         res.send(text);
     } catch (error) {
+        console.log('error');
         res.status(500).send('Error fetching data');
     }
   });
