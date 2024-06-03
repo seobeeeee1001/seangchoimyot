@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { type } from 'os';
 
 const app = express();
-const port = 4444;
+const port = 2222;
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

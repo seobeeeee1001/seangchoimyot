@@ -5,14 +5,15 @@ function priceApiCore() {
       }
 
     this.apiKey = '***REMOVED***';
-    this.baseUrl = 'http://seangchoimyot.kro.kr:4444/';
+    // this.apiKey = '***REMOVED***';
+    this.baseUrl = 'http://seangchoimyot.kro.kr:2222/';
     this.getProductInfo = async function (prodId) {
         sleep(35);
         var endpoint = 'getProductInfoSvc.do'
 
         var reqUrl = this.baseUrl + endpoint;
         var params = "?";
-        params += 'serviceKey=' + this.apiKey;
+        params += 'serviceKey=' + encodeURIComponent(this.apiKey);
         if (prodId != null) params += "&goodId=" + prodId;
 
         return fetch(reqUrl + params)
