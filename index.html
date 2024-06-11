@@ -3,24 +3,14 @@
     <head>
         <meta charset="utf-8">
         <base href="http://seangchoimyot.kro.kr/">
-        <title>내 주변 생필품 최저가</title>
+        <link href="css/main.css" rel="stylesheet">
+        <title>생최몇</title>
 
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=97450fa3f9e05038d3ae4f160f644f55&libraries=services,map,circle"></script>
         <script type="text/javascript" src="mapController.js"></script>
         <script type="text/javascript" src="priceApi.mjs"></script>
         <script type="text/javascript" src="entps.js" ></script>
-        <style>
-            div#titlebar {
-                height: 3em;
-                background-color: aliceblue;
-            };
 
-            td#menubar {
-                width: 200px;
-                vertical-align: top;
-            };
-            
-        </style>
         <script>
             const mapController = new mapControllerCore(kakao);
             const priceApi = new priceApiCore();
@@ -117,34 +107,96 @@
             }
         </script>
     </head>
-<body>
-    <div id="titlebar"></div>
-    <table style="width: 100%; height: 900px;">
-        <tr>
-            <td id="menubar" style="width: 300px; vertical-align: top;">
-                <div>
-                    <p>초기 위치 설정</p><br>
-                    <input type="text" id="firstpotision" value="부경대학교"><br>
-                    <span>반경 <input value='3000' type="number" id="radius" step="500"></span><br>
-                    <input type="button" value='초기 위치 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entpsCode, entpsCoord)">
-                    
-                    <br>
-                    <datalist id="goodsDataList"></datalist>
-                    <div id="goodBox"><ul id="goodsList"></ul><br>
-                        <input type="text" id="goodsId" list="goodsDataList"> <input type="button" value="상품 추가" onclick="addGood(document.getElementById('goodsId'))"></button>
+    <body>
+        <div class="background">
+            <!-- 상단바 시작 -->
+            <div class="titlebar">
+                <!-- 로고 시작 -->
+                <div class="logo_back">
+                    <div class="logo">
+                        <a href="http://seangchoimyot.kro.kr/">생최몇</a>
                     </div>
-                    <br>
-            
-                    <input type="button" value="장바구니 계산하기" onclick="calculateBag()">
-                    <div id="result"></div>
                 </div>
-            </td>
-            <td><div id="map" style="width: 100%; height: 100%;"></div></td>
-            
-        </tr>
-    </table>
-    <script>
-        mapController.drawMap('map');
-    </script>
-</body>
+                </a>
+                <!-- 로고 끝 -->
+                <!-- 위치 설정 시작 -->
+                <div class="place_back">
+                    <div class="place">
+                    <input type="text" id="firstpotision" style="height:19px; border-radius:5px; border:1px solid black;" value="부경대학교">
+                    <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value='위치 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entpsCode, entpsCoord)">
+                    <!--                     
+                    <input type="text" id="firstpotision" style="height:19px; border-radius:5px; border:1px solid black;" value="부경대학교">
+                    <span>반경 <input value='1000' style="height:19px; border-radius:5px; border:1px solid black;" type="number" id="radius" step="500"></span>
+                    <input type="button" style="height:21px; border-radius:5px; border:1px solid black;" value='위치 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entpsCode, entpsCoord)">
+                    -->
+                    </div>
+                </div>
+                <!-- 위치 설정 끝 -->
+            </div>
+            <!-- 상단바 끝 -->
+            <!-- 테이블 시작 -->
+            <div class="table">
+                <table style="width: 100%; height: 100%;">
+                    <tr>
+                        <!-- 좌측 메뉴 시작 -->
+                        <td class="menubar" style="width: 300px; height: 100%; vertical-align: top;">
+                            <div>
+                                <!-- 상품 검색 시작 -->
+                                <div class="search_back">
+                                    <div class="search">
+                                    <datalist id="goodsDataList"></datalist>
+                                        <div id="goodBox"><ul id="goodsList"></ul>
+                                        <input type="text" style="height:19px; border-radius:5px; border:1px solid black;" id="goodsId" list="goodsDataList">
+                                        <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value="상품 추가" onclick="addGood(document.getElementById('goodsId'))"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 상품 검색 끝 -->
+                                <!-- 장바구니 시작 -->
+                                <div class="bag_back">
+                                    <div class="bag">
+                                    <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value="장바구니 계산" onclick="calculateBag()">
+                                        <div id="result"></div>
+                                    </div>
+                                </div>
+                                <!-- 장바구니 끝 -->
+                            </div>
+                        </td>
+                        <!-- 좌측 메뉴 끝 -->
+                        <!-- 지도 시작 -->
+                        <td>
+                            <div id="map" style="width: 100%; height: 99%; border-radius: 10px; border:1px solid black; position:relative; z-index:1;">
+                                <!-- 반경 + - 기능 시작 -->
+                                <div class="range">
+                                    <input style="width: 45px; height:19px; border-radius:5px; border:1px solid black;" type="number" id="radius" step="500">
+                                    <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value='반경 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entpsCode, entpsCoord)">
+                                </div>
+                                <!-- 반경 + - 기능 끝 -->
+                            </div>
+                        </td>
+                        <!-- 지도 끝 -->
+                    </tr>
+                </table>
+            </div>
+            <!-- 테이블 끝-->
+            <div class="siteinfo">
+                <div class="info">
+                    <p>
+                        <strong>"위치 설정"</strong> 버튼을 통하여 원하는 위치를 설정 할 수 있습니다.<br>
+                        <strong>"반경 설정"</strong> 버튼을 통하여 설정한 위치내에 반경을 조절하여 반경 내에 위치하는 가게를 확인 가능합니다.
+                    </p>
+                </div>
+                <hr>
+                <div class="maker">
+                    <br>
+                    made by 웹프로그래밍 9팀
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <script>
+                mapController.drawMap('map');
+            </script>
+        </div>
+    </body>
 </html>
