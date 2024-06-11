@@ -1,12 +1,12 @@
-function priceApiCore() {
+function priceApiCore(apiKey) {
     function sleep(ms) {
         const wakeUpTime = Date.now() + ms;
         while (Date.now() < wakeUpTime) {}
       }
 
-    this.apiKey = '***REMOVED***';
-    // this.apiKey = '***REMOVED***';
-    this.baseUrl = 'http://seangchoimyot.kro.kr:2222/';
+    this.apiKey = apiKey;
+    // this.apiKey = 'acAYoFn23qq%2BHRhsUH1BNXlI5apRt%2BlIILod9WPeSXq3aH2DCBQ1Q3YXXWE4jaeU%2Byw9GcSakE%2FEu6Q9IPTw2g%3D%3D';
+    this.baseUrl = 'http://seangchoimyot.kro.kr/';
     this.getProductInfo = async function (prodId) {
         sleep(35);
         var endpoint = 'getProductInfoSvc.do'

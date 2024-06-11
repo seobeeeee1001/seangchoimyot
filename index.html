@@ -7,13 +7,14 @@
         <title>생최몇</title>
 
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=97450fa3f9e05038d3ae4f160f644f55&libraries=services,map,circle"></script>
+        <script type="text/javascript" src="apiKeys.js"></script>
         <script type="text/javascript" src="mapController.js"></script>
         <script type="text/javascript" src="priceApi.mjs"></script>
         <script type="text/javascript" src="entps.js" ></script>
 
         <script>
-            const mapController = new mapControllerCore(kakao);
-            const priceApi = new priceApiCore();
+            const mapController = new mapControllerCore(kakao, kakaoJSKey);
+            const priceApi = new priceApiCore(priceApiKey);
             var entpJson = {};
             for (var i = 0; i < entpsCode.length; i++) {
                 entpJson[entpsCode[i][0]] = entpsCode[i][1];

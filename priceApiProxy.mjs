@@ -3,17 +3,12 @@ import fetch from 'node-fetch';
 import { type } from 'os';
 
 const app = express();
-const port = 2222;
+const port = 80;
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+app.use('/', express.static('/root/mapController/'));
 
 app.get('/getProductInfoSvc.do', async (req, res) => {
     var params = req.query;
-    console.log(params);
     var serviceKey = params['serviceKey'];
     var url = `http://openapi.price.go.kr/openApiImpl/ProductPriceInfoService/getProductInfoSvc.do?ServiceKey=${serviceKey}`;
     if (params['goodId'] != null) {

@@ -1,4 +1,4 @@
-function mapControllerCore(kakaoObject) {
+function mapControllerCore(kakaoObject, kakaoApiKey) {
     this.kakao = kakaoObject;
     this.map;
     this.circle;
@@ -9,7 +9,7 @@ function mapControllerCore(kakaoObject) {
     this.ps = new this.kakao.maps.services.Places();
 
     this.kakaoSearchKeyword = function (keyword) {
-        var apiKey = "***REMOVED***";
+        var apiKey = kakaoApiKey;
         var url = "https://dapi.kakao.com/v2/local/search/keyword.json";
         var params = "?query=" + keyword;
 
