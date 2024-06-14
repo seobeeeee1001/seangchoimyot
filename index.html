@@ -115,7 +115,7 @@
                 <!-- 로고 시작 -->
                 <div class="logo_back">
                     <div class="logo">
-                        <a href="http://seangchoimyot.kro.kr/">생최몇</a>
+                        <a href="http://seangchoimyot.kro.kr/"><p style="color:white"><strong>생최몇</strong></p></a>
                     </div>
                 </div>
                 </a>
@@ -123,8 +123,8 @@
                 <!-- 위치 설정 시작 -->
                 <div class="place_back">
                     <div class="place">
-                    <input type="text" id="firstpotision" style="height:19px; border-radius:5px; border:1px solid black;" value="부경대학교">
-                    <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value='위치 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entpsCode, entpsCoord)">
+                    <input type="text" id="firstpotision" style="height:19px; text-align:center;" value="부경대학교">
+                    <input type="button" style="width:60px; color:black; background: white; border:none; cursor:pointer;" value='위치 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value)">
                     <!--                     
                     <input type="text" id="firstpotision" style="height:19px; border-radius:5px; border:1px solid black;" value="부경대학교">
                     <span>반경 <input value='1000' style="height:19px; border-radius:5px; border:1px solid black;" type="number" id="radius" step="500"></span>
@@ -141,22 +141,60 @@
                     <tr>
                         <!-- 좌측 메뉴 시작 -->
                         <td class="menubar" style="width: 300px; height: 100%; vertical-align: top;">
-                            <div>
-                                <!-- 상품 검색 시작 -->
+                                <!-- 상품 시작 -->
                                 <div class="search_back">
-                                    <div class="search">
-                                    <datalist id="goodsDataList"></datalist>
-                                        <div id="goodBox"><ul id="goodsList"></ul>
-                                        <input type="text" style="height:19px; border-radius:5px; border:1px solid black;" id="goodsId" list="goodsDataList">
-                                        <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value="상품 추가" onclick="addGood(document.getElementById('goodsId'))"></button>
+                                    <!-- 상품 카테고리 시작 -->
+                                    <div class="category">
+                                        <div class="category_l">
+                                            <input type="text" style="width:90px; height:19px; border:1px solid black;" id="" list="">
+                                        </div>
+                                        <div class="category_m">
+                                            <input type="text" style="width:90px; height:19px; border:1px solid black;" id="" list="">
+                                        </div>
+                                        <div class="category_s">
+                                            <input type="text" style="width:90px; height:19px; border:1px solid black;" id="" list="">
                                         </div>
                                     </div>
+                                    <!-- 상품 카테고리 끝 -->
+                                    <!-- 상품 검색, 추가 시작 -->
+                                    <div class="search">
+                                        <datalist id="goodsDataList"></datalist>
+                                            <div id="goodBox"><ul id="goodsList"></ul>
+                                            <input type="text" style="width:200px; height:19px; border:1px solid black;" id="goodsId" list="goodsDataList">
+                                            <input type="button"style="width:70px; color:white; background: black; border:none; cursor:pointer;" value="상품 추가" onclick="addGood(document.getElementById('goodsId'))"></button>
+                                            </div>
+                                    </div>
+                                    <!-- 상품 검색, 추가 끝 -->
+                                    <!-- 상품 이미지, 카테고리, 이름 시작 -->
+                                    <div class="item_back">
+                                        <div class="item_img">
+                                            <img src="https://img.danawa.com/prod_img/500000/050/540/img/3540050_1.jpg?_v=20180419145113" alt="메로나" style="max-width:60px; height: auto; border:1px solid black; margin:3px;">
+                                        </div>
+                                        <div class="item_info">
+                                            <div class="category_large">
+                                                빙그레
+                                            </div>
+                                            <div class="category_medium">
+                                                아이스크림
+                                            </div>
+                                            <div class="category_small">
+                                                328
+                                            </div>
+                                            <div class="item_name">
+                                                메로나(75ml)
+                                                <div class="item_delete">
+                                                <input type="button" style="width:18px; color:white; background: black; border:none; cursor:pointer;" value="X" onclick=""></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 상품 이미지, 카테고리, 이름 끝 -->
                                 </div>
-                                <!-- 상품 검색 끝 -->
+                                <!-- 상품 끝 -->
                                 <!-- 장바구니 시작 -->
                                 <div class="bag_back">
                                     <div class="bag">
-                                    <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value="장바구니 계산" onclick="calculateBag()">
+                                    <input type="button" style="width:90px; color:white; background: black; border:none; cursor:pointer;" value="장바구니 계산" onclick="calculateBag()">
                                         <div id="result"></div>
                                     </div>
                                 </div>
@@ -166,11 +204,12 @@
                         <!-- 좌측 메뉴 끝 -->
                         <!-- 지도 시작 -->
                         <td>
-                            <div id="map" style="width: 100%; height: 99%; border-radius: 10px; border:1px solid black; position:relative; z-index:1;">
+                            <div id="map" style="width: 100%; height: 762px; border:1px solid lightgray; position:relative; z-index:1;">
                                 <!-- 반경 + - 기능 시작 -->
                                 <div class="range">
-                                    <input style="width: 45px; height:19px; border-radius:5px; border:1px solid black;" type="number" id="radius" step="500">
-                                    <input type="button" style="height:21px; border-radius:5px; border:1px solid black; cursor:pointer;" value='반경 설정' onclick="mapController.setCenterBySearchKeyword(document.getElementById('firstpotision').value, document.getElementById('radius').value, entpsCode, entpsCoord)">
+                                    <input type="button" style="width:20px; color:white; background: black; border:none; cursor:pointer;" value='-' onclick="">
+                                    <input value='1000' style="width:32px; height:19px; border:1px solid black;" id="radius" step="500">
+                                    <input type="button" style="width:20px; color:white; background: black; border:none; cursor:pointer;" value='+' onclick="">
                                 </div>
                                 <!-- 반경 + - 기능 끝 -->
                             </div>
@@ -184,13 +223,15 @@
                 <div class="info">
                     <p>
                         <strong>"위치 설정"</strong> 버튼을 통하여 원하는 위치를 설정 할 수 있습니다.<br>
-                        <strong>"반경 설정"</strong> 버튼을 통하여 설정한 위치내에 반경을 조절하여 반경 내에 위치하는 가게를 확인 가능합니다.
+                        지도의 오른쪽 상단에 위치한 <strong>"+"</strong>, <strong>"-"</strong> 버튼을 통하여 설정한 위치내에 반경을 조절하여 반경 내에 위치하는 가게를 확인 가능합니다.
                     </p>
                 </div>
                 <hr>
                 <div class="maker">
                     <br>
+                    <br>
                     made by 웹프로그래밍 9팀
+                    <br>
                     <br>
                     <br>
                 </div>

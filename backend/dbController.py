@@ -71,3 +71,37 @@ class dbController:
             return "Data updated successfully"
         except Exception as e:
             return str(e)
+
+    def getAllGoodsData(self):
+        try:
+            self.cursor.execute('SELECT * FROM public.goods')
+            res = self.cursor.fetchall()
+            goods_data = []
+            for row in res:
+                good = {
+                    'goodid': row[0],
+                    'goodnm': row[1],
+                    'cat1': row[2],
+                    'cat2': row[3],
+                    'cat3': row[4],
+                    'imagepath': row[5]
+                }
+                goods_data.append(good)
+            return goods_data
+        except Exception as e:
+            return str(e)
+
+    def getAllEntpsData(self):
+        try:
+            self.cursor.execute('SELECT * FROM public.entps')
+            res = self.cursor.fetchall()
+            datas = []
+            for row in res:
+                entp = {
+                    'entpid': row[0],
+                    'entpnm': row[1]
+                }
+                datas.append(entp)
+            return datas
+        except Exception as e:
+            return str(e)

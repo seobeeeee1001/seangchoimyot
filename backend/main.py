@@ -45,7 +45,28 @@ def updatePriceData():
     except Exception as e:
         return str(e), 500
 
+@app.route('/getAllGoodsData', methods=['GET'])
+def getAllGoodsData():
+    try:
+        goods_data = db.getAllGoodsData()
+        for good in goods_data:
+            print(good)  # 콘솔에 출력
+        return jsonify(goods_data), 200
+    except Exception as e:
+        return str(e), 500
+
+@app.route('/getAllEntpsData', methods=['GET'])
+def getAllEntpsData():
+    try:
+        entps_data = db.getAllEntpsData()
+        for entp in entps_data:
+            print(entp)  # 콘솔에 출력
+        return jsonify(entps_data), 200
+    except Exception as e:
+        return str(e), 500
+
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8443)
+    app.run(debug=True, host='0.0.0.0', port=8444)
 
 

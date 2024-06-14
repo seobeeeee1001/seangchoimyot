@@ -5,24 +5,19 @@
 }
 
 .background {
-    background-color:lightgoldenrodyellow;
+    background-color:white;
 }
 
 .titlebar {
-    margin:3px;
-    padding:3px;
-    border-radius:10px;
-    border:2px solid black;
-    height: 2em;
-    background-color: darkorange;
+    height: 40px;
+    background-color: black;
     display:flex;
 }
 
 .logo_back {
+    margin-left:10px;
+    margin-top:5px;
     width:4%;
-    border-radius:7px;
-    border:1px solid black;
-    background-color:khaki;
     text-align:center;
 }
 
@@ -38,45 +33,95 @@ a{
 .place_back {
     width:17%;
     height:30px;
-    border-radius:10px;
-    border:1px solid black;
     margin-left:80%;
-    background-color:khaki;
 }
 
 .place {
-    margin-left:5px;
-    margin-top:3px;
+    margin-top:6px;
 }
 
 .table {
     margin:3px;
     padding:3px;
-    border-radius: 10px;
-    border:2px solid black;
-    background-color:orange;
+    background-color:white;
 }
 
 .search_back {
-    height:300px;
+    height:450px;
     margin:2px;
     padding:2px;
-    border-radius: 10px;
     border:1px solid black;
-    background-color:khaki;
+    background-color:white;
+}
+
+.category {
+    margin-top:3px;
+    display:flex;
+}
+
+.category_l {
+    margin-left:3px;
+}
+
+.category_m {
+    margin-left:3px;
+}
+
+.category_s {
+    margin-left:3px;
 }
 
 .search{
-    margin-left:28px;
+    margin-left:3px;
+}
+
+.item_back {
+    height:70px;
+    margin:3px;
+    padding:3px;
+    border:1px solid lightgray;
+    background-color: white;
+}
+
+.item_img {
+    float:left;
+}
+
+.item_info{
+    text-align:center;
+    margin-top:3px;
+}
+
+.category_large {
+    font-size:11px;
+    margin-top:1px;
+}
+
+.category_medium {
+    font-size:11px;
+    margin-top:1px;
+}
+
+.category_small {
+    font-size:11px;
+    margin-top:1px;
+}
+
+.item_name {
+    font-size:12px;
+    margin-top:1px;
+}
+
+.item_delete {
+    float:right;
 }
 
 .bag_back {
     margin:2px;
     padding:2px;
-    border-radius: 10px;
     border:1px solid black;
-    height:600px;
-    background-color:khaki;
+    height:300px;
+    background-color:white;
 }
 
 .bag {
@@ -91,7 +136,7 @@ a{
 .range {
     opacity : 1;
     float:right;
-    margin:1px;
+    margin-right:4px;
     padding:1px;
     position:relative;
     z-index:10;
